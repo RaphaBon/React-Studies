@@ -1,0 +1,8 @@
+.car{
+    color: aqua;
+    background-color: rgb(104, 102, 102);
+    border: 1px solid white;
+    border-radius: 0.8px;
+    width: 10%;
+    height: 10%;
+}
