@@ -1,0 +1,31 @@
+/* Tudo aqui dentro será aplicado para todos components */
+html, body{
+  height: 100%; 
+}
+
+body{
+  margin: 0;
+  padding: 0;
+  /* Background vai ter um espécie de FADE indo para baixo, onde começa no rosa e termina no azul */
+  background-image: linear-gradient(to bottom, #ea35de 0%, #00f2fe 100%);
+  font-family: Helvetica, sans-serif;
+  color: white;
+}
+
+button{
+  background-color: #1646a0;
+  color: white;
+  padding: 0 45px;
+  border: 2px solid white;
+  border-radius: 25px;
+  height: 50px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: .4s;
+}
+
+button:hover{
+  background-color: #0923af;
+}
