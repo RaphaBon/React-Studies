@@ -52,6 +52,7 @@ const Game = ({
                             )
                 ))}
             </div>
+            
             <div className="letterContainer">
                 <p>Tente advinhar uma letra da palavra:</p>
 

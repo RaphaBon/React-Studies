@@ -1,5 +1,5 @@
 //React
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 //CSS
 import './App.css'
@@ -58,6 +58,9 @@ function App() {
   {/* Começa o  jogo, porém antes definimos a palavra a ser advinha e desestruturamos ela em letras */ }
 
   const startGame = () => {
+    {/* Como vamos chamar essa função após gnahar o jogo, resetamos as letras já acertadas e erradas */}
+    clearLetterStates()
+
     const { word, category } = pickWordAndCategory()
 
     {/* Pega cada letra e transforma em lowerCase */ }
@@ -72,29 +75,87 @@ function App() {
     setGameStage(stages[1].name)
   }
 
+  {/* Função para padrozinar a letra */ }
+  const verifyLetter = (letter) => {
+
+    const normalizedLetter = letter.toLowerCase()
+
+    {/* Chega se a letra já foi utilizada (tanto acertada quanto errada): */ }
+    if (guessedLetters.includes(normalizedLetter) || wrongLetters.includes(normalizedLetter)) {
+      return
+    }
+
+    {/* Adicionar a letra a palavra ou reduzir uma tentativa  */ }
+    if (letters.includes(normalizedLetter)) {
+      {/* Pegamos todos os elementos do array (setGuessedLetters) e adicionamos a letra atual digitada */ }
+      setGuessedLetters((actualGuessedLetters) => [
+        ...actualGuessedLetters, normalizedLetter
+      ])
+    } else {
+      setWrongLetters((actualWrongLetters) => [
+        ...actualWrongLetters, normalizedLetter
+      ])
+
+      {/* Se ele errou, diminui 1 nas chaces */}
+      setGuesses((actualGuesses) => actualGuesses - 1)
+
+    }
+  }
+
+  const clearLetterStates = () => {
+    setGuessedLetters([])
+    setWrongLetters([])
+  }
+
+  {/* Método que verifica constantemente um elemento, nesse caso é o "guesses". Onde ele verifica se guesses <= 0 */}
+  useEffect(() => {
+    if(guesses <= 0){
+      {/* Os states precisam ser limpados para evitar que o usuário recomeçe o jogo com 0 tentativas */}
+      clearLetterStates()
+      
+      setGameStage(stages[2].name)
+    }
+
+  }, [guesses])
+
+  {/* Condição de Vitória */}
+  useEffect(() => {
+
+    {/* Pega o array de letras e o método Set tira as letras repetidas   */}
+    const uniqueLetters = [... new Set(letters)]
+
+    if(guessedLetters.length === uniqueLetters.length){
+       setScore((actualScore) => actualScore += 100)
+
+       startGame()
+    }
+
+
+  }, [guessedLetters, letters, startGame])
+
+  {/* Quando ele reiniciar o jogo, zera os dados dele */}
   const retry = () => {
+    setScore(0)
+    setGuesses(3)
+
     setGameStage(stages[0].name)
   }
 
-  {/* Função para processar a letra digitada, se passou de 3 tentativa, finaliza o jogo */ }
-  const verifyLetter = (letter) => {
-    console.log(letter)
-  }
 
   return (
     <div className="App">
       {/* IF para cada tela e imprime seu respectivo component */}
       {gameStage === "start" && <StartScreen startGame={startGame} />}
-      {gameStage === "game" && <Game verifyLetter={verifyLetter} 
-                                pickedWord={pickedWord} 
-                                pickedCategory={pickedCategory} 
-                                letters={letters} 
-                                guessedLetters={guessedLetters}
-                                wrongLetters={wrongLetters}
-                                guesses={guesses}
-                                score={score}/>}
-                                
-      {gameStage === "end" && <GameOver retry={retry} />}
+      {gameStage === "game" && <Game verifyLetter={verifyLetter}
+        pickedWord={pickedWord}
+        pickedCategory={pickedCategory}
+        letters={letters}
+        guessedLetters={guessedLetters}
+        wrongLetters={wrongLetters}
+        guesses={guesses}
+        score={score} />}
+
+      {gameStage === "end" && <GameOver retry={retry} score={score} />}
     </div>
 
 
