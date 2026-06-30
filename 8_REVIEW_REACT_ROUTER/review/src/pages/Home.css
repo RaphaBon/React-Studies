@@ -1,0 +1,32 @@
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    padding: 0;
+    margin-top: 16px;
+}
+
+.products li {
+    list-style: none;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    text-align: left;
+}
+
+.products li h3 {
+    margin: 0 0 8px;
+}
+
+.products li a {
+    display: inline-block;
+    margin-top: 8px;
+    color: #1976d2;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.products li a:hover {
+    text-decoration: underline;
+}
