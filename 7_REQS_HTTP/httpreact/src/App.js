@@ -81,7 +81,7 @@ function App() {
       {error && <p>{error}</p>}
       {!error && 
         (<ul>
-                {/* Aula 3 -> Exibir cada produto vindo da API */}
+        {/* Aula 3 -> Exibir cada produto vindo da API */}
         {/* Aula 6 -> Como agora estamos usando os dados do nosso hook, o map é no array que veio de lá
         , porém, ele inicialmente vem como null, então fazemos um IF para só usar map se tiver dados */}
           {items && items.map((product) => (
