@@ -15,6 +15,8 @@ import NotFound from './pages/NotFound/NotFound'
 import Dashboard from './pages/Dashboard/Dashboard'
 import CreatePost from './pages/CreatePost/CreatePost'
 import Search from './pages/Search/Search';
+import Post from './pages/Post/Post';
+
 
 //Hooks
 import { useState, useEffect } from 'react';
@@ -58,6 +60,7 @@ function App() {
           <Route path="/" element={<Home />}/>
           <Route path="/about" element={<About />}/>
           <Route path="/search" element={<Search/>}/>
+          <Route path='/post/:id' element={<Post />}/>
           <Route path="/register" element={!user ? <Register/> : <Navigate to="/" />} />
           <Route path="/login" element={!user ? <Login/> : <Navigate to="/" />} />
           <Route path="/dashboard" element={user ? <Dashboard/> : <Navigate to="/login" />} />
