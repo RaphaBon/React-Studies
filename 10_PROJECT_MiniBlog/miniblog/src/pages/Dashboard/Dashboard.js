@@ -1,23 +1,25 @@
+//CSS
 import styles from './Dashboard.module.css'
 
+//Route
 import { Link } from 'react-router-dom'
 
 //Hooks
 import {useAuthValue} from '../../context/AuthContext'
 import { useFetchDocuments } from '../../hooks/useFetchDocuments'
+import { useDeleteDocuments } from '../../hooks/useDeleteDocuments'
 
 const Dashboard = () => {
 
   const {user} = useAuthValue()
   const uid = user.uid
 
+  //Delete
+  const {deleteDocument} = useDeleteDocuments("posts")
+
   // Posts do usuário
-  const {documents: posts, loading} = useFetchDocuments("posts", null, uid)
-
-  //Delete 
-  const deleteDocument = (id) => {
-
-  }
+  const docColletion = "posts"
+  const {documents: posts, loading} = useFetchDocuments(docColletion, null, uid)
 
   if(loading){
     return <p>Carregando ...</p>
