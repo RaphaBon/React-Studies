@@ -23,7 +23,9 @@ const HookUseEffect = () => {
   const [value, setValue] = useState(0)
 
   useEffect(() => {
-    console.log("Sou executado apenas quando o value é alterado!")
+    if(value > 0){
+      console.log("Sou executado apenas quando o value é alterado!")
+    }
   }, [value])
 
   // 4 -> CleanUP do useEffect()
