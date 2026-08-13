@@ -7,6 +7,7 @@ import HookUseEffect from "../components/HookUseEffect"
 import { useContext } from "react"
 import { UseContext } from "../components/HookUseContext"
 import HookUseRef from "../components/HookUseRef"
+import HookUseCallback from "../components/HookUseCallback"
 
 const Hooks = () => {
   
@@ -20,6 +21,7 @@ const Hooks = () => {
         <strong>Valor do context: {value}</strong>
         <hr />
         <HookUseRef />
+        <HookUseCallback />
 
         <footer>
             <br />
