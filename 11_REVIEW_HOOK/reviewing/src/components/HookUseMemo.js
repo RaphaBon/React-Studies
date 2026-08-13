@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react"
+import { useState, useMemo } from "react"
 
 const HookUseMemo = ({produtos}) => {
 
@@ -13,8 +13,8 @@ const HookUseMemo = ({produtos}) => {
 
   const produtosCaro = useMemo(() => {
         console.log("Filtrando produto ...")
-        return produtos.filter((p) => p.preco > 100)
-  }, [produtos])
+ //       return produtos.filter((p) => p.preco > 100)
+  }, []) //[produtos]
    
 
   return (

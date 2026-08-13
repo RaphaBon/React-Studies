@@ -9,6 +9,7 @@ import HookUseMemo from "../components/HookUseMemo"
 
 import { useContext } from "react"
 import { UseContext } from "../components/HookUseContext"
+import HookUseImperativeHandle from "../components/HookUseImperativeHandle"
 
 
 const Hooks = () => {
@@ -25,6 +26,7 @@ const Hooks = () => {
         <HookUseRef />
         <HookUseCallback />
         <HookUseMemo />
+        <HookUseImperativeHandle />
 
         <footer>
             <br />
