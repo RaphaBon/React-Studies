@@ -3,11 +3,13 @@ import { Link } from "react-router-dom"
 import HookUseState from '../components/HookUseState'
 import HookUseReducer from "../components/HookUseReducer"
 import HookUseEffect from "../components/HookUseEffect"
+import HookUseRef from "../components/HookUseRef"
+import HookUseCallback from "../components/HookUseCallback"
+import HookUseMemo from "../components/HookUseMemo"
 
 import { useContext } from "react"
 import { UseContext } from "../components/HookUseContext"
-import HookUseRef from "../components/HookUseRef"
-import HookUseCallback from "../components/HookUseCallback"
+
 
 const Hooks = () => {
   
@@ -22,6 +24,7 @@ const Hooks = () => {
         <hr />
         <HookUseRef />
         <HookUseCallback />
+        <HookUseMemo />
 
         <footer>
             <br />
