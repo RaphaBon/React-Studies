@@ -6,6 +6,7 @@ import HookUseEffect from "../components/HookUseEffect"
 
 import { useContext } from "react"
 import { UseContext } from "../components/HookUseContext"
+import HookUseRef from "../components/HookUseRef"
 
 const Hooks = () => {
   
@@ -17,10 +18,14 @@ const Hooks = () => {
         <HookUseReducer />
         <HookUseEffect />
         <strong>Valor do context: {value}</strong>
+        <hr />
+        <HookUseRef />
+
         <footer>
             <br />
             <Link to="/">VOLAR PARA HOME</Link>
         </footer>
+        
     </div>
   )
 }
