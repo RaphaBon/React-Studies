@@ -55,6 +55,7 @@ const register = async(req, res) => {
 
 }
 
+//Sing in user
 const login = async(req, res) => {
     
     const {email, password} = req.body
@@ -91,5 +92,15 @@ const login = async(req, res) => {
 
 }
 
+// Get current logged in user
+const getCurrentUser = async(req,res) => {
 
-module.exports = {register, login}
+    // We can catch the user because we put it on request in the token validation middleware
+    const user = req.user
+    res.status(200).json(user)
+
+}
+
+
+
+module.exports = {register, login, getCurrentUser}
