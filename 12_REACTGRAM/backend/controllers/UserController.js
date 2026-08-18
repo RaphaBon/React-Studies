@@ -8,12 +8,51 @@ const jwtSecret = process.env.JWT_SECRET
 
 //Generate user token
 const generateToken = (id) => {
-    return jwt.sign(id, jwtSecret, {expiresIn: "7d"})
+    return jwt.sign({id}, jwtSecret, {expiresIn: "7d"})
 }
 
 //Register and sign in user
 const register = async(req, res) => {
-    res.send("Registro!")
+    
+    const {name, email, password} = req.body
+
+    //Check if user exists
+    const checkIfUserExists = await User.findOne({email})
+
+    if(checkIfUserExists){
+        res.status(422).json({errors: ["Email ou senha inválidos!"]})
+        return
+    }
+
+    //Generate hashed password
+    const salt = await bcrypt.genSalt()
+    const hashedPassword = await bcrypt.hash(password, salt)
+
+    try {
+        //Create user
+        const newUser = await User.create({
+            name,
+            email,
+            password: hashedPassword
+        })
+
+        //If user was created sucessfully:
+        if(!newUser){
+            return res.status(422).json({errors: ["Houve um erro, por favor tente mais tarde!"]})
+        }
+
+        return res.status(201).json({
+            _id: newUser._id,
+            token: generateToken(newUser._id)
+        })
+
+    } catch (error) {
+        return res.status(500).json({
+            errors: [error.message]
+        })
+    }
+
+
 }
 
 
