@@ -55,6 +55,41 @@ const register = async(req, res) => {
 
 }
 
+const login = async(req, res) => {
+    
+    const {email, password} = req.body
+
+    const user = await User.findOne({email})
+
+    if(!user){
+        res.status(422).json({errors: ["Erro ao realizar o login!"]})
+        return
+    }
+
+    //Check if password matches
+    if(!await(bcrypt.compare(password, user.password))){
+        res.status(422).json({errors: ["Erro ao realizar o login!"]})
+        return
+    }
+
+    try {
+        
+        res.status(201).json({
+            _id: user._id,
+            profileImage: user.profileImage,
+            token: generateToken(user._id)
+        })
 
 
-module.exports = {register}
+    } catch (error) {
+        return res.status(500).json({
+            errors: [error.message]
+        })
+    }
+
+
+
+}
+
+
+module.exports = {register, login}
