@@ -20,7 +20,7 @@ const register = async(req, res) => {
     const checkIfUserExists = await User.findOne({email})
 
     if(checkIfUserExists){
-        res.status(422).json({errors: ["Email ou senha inválidos!"]})
+        res.status(422).json({errors: ["Não foi possível realizar o cadastro"]})
         return
     }
 
