@@ -11,6 +11,12 @@ const generateToken = (id) => {
     return jwt.sign({id}, jwtSecret, {expiresIn: "7d"})
 }
 
+//Generate hashed password
+const hashedPassword = async(password) => {
+    const salt = await bcrypt.genSalt()
+    return await bcrypt.hash(password, salt)
+}
+
 //Register and sign in user
 const register = async(req, res) => {
     
@@ -25,15 +31,14 @@ const register = async(req, res) => {
     }
 
     //Generate hashed password
-    const salt = await bcrypt.genSalt()
-    const hashedPassword = await bcrypt.hash(password, salt)
+    const passwordHash = await hashedPassword(password)
 
     try {
         //Create user
         const newUser = await User.create({
             name,
             email,
-            password: hashedPassword
+            password: passwordHash
         })
 
         //If user was created sucessfully:
