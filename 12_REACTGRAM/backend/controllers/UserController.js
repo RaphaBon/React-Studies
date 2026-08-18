@@ -106,6 +106,40 @@ const getCurrentUser = async(req,res) => {
 
 }
 
+const update = async(req,res) => {
+
+    const {name, password, bio} = req.body
+
+    //Handle image
+    let profileImage = null
+
+    if(req.file){
+        profileImage = req.file.filename
+    }
+
+    //Get User
+    const reqUser = req.user
+    const user = reqUser
+
+    //Changes
+    if(name){
+        user.name = name
+    }
+
+    if(password){
+        user.password = await hashedPassword(password)
+    }
+
+    if(bio){
+        user.bio = bio
+    }
+
+    //Update user
+    await user.save()
+
+    res.status(200).json(user)
+}
 
 
-module.exports = {register, login, getCurrentUser}
+
+module.exports = {register, login, getCurrentUser, update}
