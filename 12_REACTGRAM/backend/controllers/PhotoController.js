@@ -3,28 +3,27 @@ const mongoose = require("mongoose")
 
 //Insert a photo with an user related to it
 const insertPhoto = async(req, res) => {
-
-    // Gettin datas
     const {title} = req.body 
     const image = req.file.filename
     const user = req.user
 
-    // Create photo
-    const newPhoto = await Photo.create({
-        image,
-        title,
-        userId: user._id,
-        userName: user.name
-    })
+    try {
+        const newPhoto = await Photo.create({
+            image,
+            title,
+            userId: user._id,
+            userName: user.name
+        })
 
-    // If photo was created successfully, return data
-    if(!newPhoto){
-        res.status(422).json({errors: ["Houve um problema, tente novamente mais tarde!"]})
-        return
+        if(!newPhoto){
+            res.status(422).json({errors: ["Houve um problema, tente novamente mais tarde!"]})
+            return
+        }
+
+        res.status(201).json(newPhoto)
+    } catch (error) {
+        res.status(500).json({errors: [error.message]})
     }
-
-    res.status(201).json(newPhoto)
-
 }
 
 //Delete a photo by id
@@ -45,7 +44,7 @@ const deletePhoto = async(req, res) => {
 
         //Check if photo belongs to user
         if(!photo.userId.equals(user._id)){
-            res.status(422).json({errros: ["Erro ao excluir a foto, tente novamente mais tarde"]})
+            res.status(422).json({errors: ["Erro ao excluir a foto, tente novamente mais tarde"]})
             return
         }
 
