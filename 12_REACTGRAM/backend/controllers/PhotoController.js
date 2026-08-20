@@ -68,6 +68,21 @@ const getAllPhotos = async (req, res) => {
     }
 }
 
+//Get user photo
+const getUserPhoto = async (req,res) => {
 
-module.exports = {insertPhoto, deletePhoto, getAllPhotos}
+    const {id: userId} = req.params
+
+    try{
+        const photos = await Photo.find({userId}).sort([["createdAt", -1]])
+        res.status(200).json(photos)
+
+    }catch(error){
+        res.status(500).json({errors: ["Erro ao carregar a foto"]})
+    }
+
+}
+
+
+module.exports = {insertPhoto, deletePhoto, getAllPhotos, getUserPhoto}
 
