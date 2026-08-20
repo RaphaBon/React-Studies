@@ -33,7 +33,6 @@ const deletePhoto = async(req, res) => {
     const user = req.user
 
     try {
-        console.log(id)
         const photo = await Photo.findById(id)
 
         //Check if photo exists
@@ -52,7 +51,7 @@ const deletePhoto = async(req, res) => {
 
         res.status(200).json({id: photo._id, message: "Foto excluída com sucesso!"})
     } catch (error) {
-        res.status(404).json({errors: ["Foto não encontrada!"]})
+        res.status(500).json({errors: ["Erro ao deletar a foto"]})
         return
     }
     
@@ -118,7 +117,7 @@ const updatePhoto = async (req,res) => {
 
         //Check if photo belongs to user
         if(!photo.userId.equals(user._id)){
-            res.status(422).json({errros: ["Ocorreu um erro, tente novamente mais tarde"]})
+            res.status(422).json({errors: ["Ocorreu um erro, tente novamente mais tarde"]})
             return
         }
 
@@ -166,7 +165,6 @@ const like = async (req,res) => {
     }
 
 }
-
 
 
 module.exports = {
