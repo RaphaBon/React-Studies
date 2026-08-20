@@ -1,5 +1,6 @@
 const Photo = require("../models/Photo")
 const mongoose = require("mongoose")
+const User = require("../models/User")
 
 //Insert a photo with an user related to it
 const insertPhoto = async(req, res) => {
@@ -166,6 +167,45 @@ const like = async (req,res) => {
 
 }
 
+//Comments functionality
+const comments = async (req,res) => {
+
+    const {id} = req.params
+    const user = req.user
+    const {comments} = req.body
+
+    try {
+        //Check if photo exists
+        const photo = await Photo.findById(id)
+        if(!photo){
+            res.status(422).json({errors: ["Erro ao comentar na foto"]})
+            return
+        }
+
+        if(!comments){
+            res.status(422).json({errors: ["Por favor, insira um comentário"]})
+            return
+        }
+
+        //Put comments in the array comments
+        const userComment = {
+            comments,
+            userName: user.name,
+            userImage: user.profile,
+            userId: user._id
+        }
+
+        photo.comments.push(userComment)
+        await photo.save()
+
+        res.status(200).json({comment: userComment, message: "Comentado com sucesso"})
+
+    } catch (error) {
+        res.status(500).json({errors: ["Erro ao comentar na foto"]})
+    }
+
+}
+
 
 module.exports = {
 insertPhoto, 
@@ -174,5 +214,6 @@ getAllPhotos,
 getUserPhoto,
 getPhotoById, 
 updatePhoto,
-like}
+like,
+comments}
 
