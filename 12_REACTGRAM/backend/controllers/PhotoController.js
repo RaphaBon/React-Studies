@@ -206,6 +206,18 @@ const comments = async (req,res) => {
 
 }
 
+//Search photos by title
+const searchPhotos = async (req, res) => {
+
+    const {q} = req.query
+
+    try {
+        const photos = await Photo.find({title: new RegExp(q, "i")})
+        res.status(200).json(photos)
+    } catch (error) {
+        res.status(500).json({errors: ["Erro ao buscar foto"]})
+    }   
+}
 
 module.exports = {
 insertPhoto, 
@@ -215,5 +227,6 @@ getUserPhoto,
 getPhotoById, 
 updatePhoto,
 like,
-comments}
+comments,
+searchPhotos}
 
