@@ -10,7 +10,8 @@ getUserPhoto,
 getPhotoById, 
 updatePhoto, 
 like,
-comments} = require("../controllers/PhotoController")
+comments,
+searchPhotos} = require("../controllers/PhotoController")
 
 //Middlewares
 const {photoInsertValidation, photoUpdateValidation, commentsValidation} = require("../middlewares/photoValidation")
@@ -23,6 +24,7 @@ router.post("/", authGuard, imageUpload.single("image"), photoInsertValidation()
 router.delete("/:id", authGuard, deletePhoto)
 router.get("/", authGuard, getAllPhotos)
 router.get("/user/:id", authGuard, getUserPhoto)
+router.get("/search", authGuard, searchPhotos)
 router.get("/:id", authGuard, getPhotoById)
 router.put("/:id", authGuard, photoUpdateValidation(), validation, updatePhoto)
 router.put("/like/:id", authGuard, like)
