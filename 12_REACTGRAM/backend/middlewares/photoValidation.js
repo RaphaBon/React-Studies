@@ -21,4 +21,10 @@ const photoUpdateValidation = () => {
     ]
 }
 
-module.exports = {photoInsertValidation, photoUpdateValidation}
+const commentsValidation = () => {
+    return[
+        body("comments").optional().isString().withMessage("O comentário precisa ser um texto")
+    ]
+}
+
+module.exports = {photoInsertValidation, photoUpdateValidation, commentsValidation}
