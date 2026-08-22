@@ -135,8 +135,8 @@ const updatePhoto = async (req,res) => {
 
 }
 
-//Like functionality
-const like = async (req,res) => {
+//Toggle like / unlike functionality
+const toggleLike = async (req,res) => {
 
     const {id} = req.params
     const user = req.user
@@ -149,20 +149,24 @@ const like = async (req,res) => {
             return
         }
 
-        //Check if user already liked
-        if(photo.likes.includes(user._id)){
-            res.status(422).json({errors: ["Você já curtiu a foto."]})
-            return
-        }
+        //Check if user already like
+        const alreadyLiked = photo.likes.includes(user._id)
 
-        //Put user id in like array
-        photo.likes.push(user._id)
+        if(alreadyLiked){
+            photo.likes.pull(user._id)
+        }else{
+            photo.likes.push(user._id)
+        }
+        
         await photo.save()
 
-        res.status(200).json({photoId: id, userId: user._id, message: "A foto foi curtida"})
-
+        res.status(200).json({
+            photoId: id,
+            userId: user._id, 
+            liked: !alreadyLiked,
+            message: alreadyLiked ? "Voce removeu seu like" : "A foto foi curtida"})
     } catch (error) {
-        res.status(500).json({errors: ["Erro ao curtir a foto"]})
+        res.status(500).json({errors: ["Erro ao curtir/descutir a foto"]})
     }
 
 }
@@ -226,7 +230,7 @@ getAllPhotos,
 getUserPhoto,
 getPhotoById, 
 updatePhoto,
-like,
+toggleLike,
 comments,
-searchPhotos}
+searchPhotos,}
 
