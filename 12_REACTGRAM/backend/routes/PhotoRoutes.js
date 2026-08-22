@@ -9,7 +9,7 @@ getAllPhotos,
 getUserPhoto, 
 getPhotoById, 
 updatePhoto, 
-like,
+toggleLike,
 comments,
 searchPhotos} = require("../controllers/PhotoController")
 
@@ -27,7 +27,7 @@ router.get("/user/:id", authGuard, getUserPhoto)
 router.get("/search", authGuard, searchPhotos)
 router.get("/:id", authGuard, getPhotoById)
 router.put("/:id", authGuard, photoUpdateValidation(), validation, updatePhoto)
-router.put("/like/:id", authGuard, like)
+router.put("/like/:id", authGuard, toggleLike)
 router.put("/comments/:id", authGuard, commentsValidation(), validation, comments)
 
 module.exports = router
